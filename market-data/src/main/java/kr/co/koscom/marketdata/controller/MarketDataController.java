@@ -1,15 +1,14 @@
 package kr.co.koscom.marketdata.controller;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
-@Controller
-
+@RestController
 public class MarketDataController {
-	@RequestMapping("/MarketData")
-	public String MarketData() {
-		// TODO Auto-generated method stub
-		return "MarketData";
+	@RequestMapping(value="/" , method = RequestMethod.GET)
+	public ModelAndView MarketData(){
+		ModelMap model = new ModelMap();
+		return new ModelAndView("MarketData", model);
 	}
-
 }

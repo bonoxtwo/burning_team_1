@@ -1,10 +1,19 @@
 package kr.co.koscom.marketdata;
 
-public class SpringConfig {
+import org.springframework.context.annotation.*;
+import org.springframework.web.servlet.ViewResolver;
+import org.springframework.web.servlet.config.annotation.*;
+import org.springframework.web.servlet.view.*;
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
-
+@Configuration
+@EnableWebMvc
+public class SpringConfig extends WebMvcConfigurerAdapter {
+   @Bean
+    public ViewResolver internalResourceViewResolver() {
+        InternalResourceViewResolver resolver = new InternalResourceViewResolver();
+        resolver.setPrefix("/WEB-INF/jsp/");
+        resolver.setSuffix(".jsp");
+        resolver.setViewClass(JstlView.class);
+        return resolver;
+    }
 }
