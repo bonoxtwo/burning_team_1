@@ -9,7 +9,7 @@
 </head>
 <body>
 <c:forEach var="item" items="${marketList}" varStatus="status">
-<c:out value="${item.isuKorAbbr}">
+
 </c:forEach>
 </body>
 </html>
