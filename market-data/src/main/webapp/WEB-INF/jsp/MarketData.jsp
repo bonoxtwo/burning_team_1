@@ -14,27 +14,6 @@ li { list-style-type: none; }
     color: #fff;
     text-align: center;
 }
-#searchForm li { margin: 10px; text-align: center; }
-#searchForm li span {
-    width: 20%;
-    display: inline-block;
-    padding: 10px;
-    background-color: #f39c11;
-    border-radius: 10px;
-    border: #847b7b;
-    text-align: center;
-}
-#searchForm li input,
-#searchForm li select {
-    width: 20%;
-    display: inline-block;
-    padding: 10px 5px;
-    text-align: center;
-    box-sizing: content-box;
-}
-#searchForm li input.edate {
-	margin-left: 10px;
-}
 #view { margin: 20px; }
 #stocksList li {
     padding: 10px 0px;
