@@ -16,15 +16,22 @@ import org.springframework.web.servlet.ModelAndView;
 public class MarketDataController {
 	@RequestMapping(value="/" , method = RequestMethod.GET)
 	public ModelAndView MarketData() throws IOException, Exception{
-	    String js = GetApi();
-	    JSONObject jsonObject = new JSONObject(js);
-        ModelMap model = new ModelMap();
-        model.addAttribute("marketList", jsonObject.get("isuLists"));
+		ModelMap model = new ModelMap();
+		
+		String aaa = "https://sandbox-apigw.koscom.co.kr/v2/market/stocks/{marketcode}/lists".replace("{marketcode}", URLEncoder.encode("kospi", "UTF-8"));
+	    String js1 = GetApi(aaa);
+	    JSONObject jsonObject1 = new JSONObject(js1);
+        model.addAttribute("marketList", jsonObject1.get("isuLists"));
+        
+/*		String bbb = "https://sandbox-apigw.koscom.co.kr/v2/market/stocks/{marketcode}/{issuecode}/price".replace("{marketcode}", URLEncoder.encode("kospi", "UTF-8")).replace("{issuecode}", URLEncoder.encode("005930", "UTF-8"));
+	    String js2 = GetApi(bbb);
+	    JSONObject jsonObject2 = new JSONObject(js2);
+        model.addAttribute("PriceList", jsonObject2.get("isuLists"));*/
         return new ModelAndView("MarketData", model);
 	}
 	
-	String GetApi() throws IOException, Exception{
-		 StringBuilder urlBuilder = new StringBuilder("https://sandbox-apigw.koscom.co.kr/v2/market/stocks/{marketcode}/lists".replace("{marketcode}", URLEncoder.encode("kospi", "UTF-8")));
+	String GetApi(String link) throws IOException, Exception{
+		 StringBuilder urlBuilder = new StringBuilder(link);
 	        URL url = new URL(urlBuilder.toString());
 	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 	        conn.setRequestMethod("GET");
