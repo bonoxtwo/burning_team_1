@@ -1,15 +1,29 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"
-    import="org.json.JSONArray,org.json.JSONException"%>
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html lang="ko">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>first page</title>
 </head>
 <body>
-<c:forEach var="item" items="${marketList}" varStatus="status">
-
-</c:forEach>
+<div id="view">
+	<!-- ì¢…ëª© ë¦¬ìŠ¤íŠ¸ -->
+	<div id="stocksList">
+		<ul>
+			<li class="fRow">
+				<span class="no">No.</span>
+				<span class="isuKor">ì¢…ëª©ëª…</span>
+			</li>
+			<c:forEach begin="0" end="${marketList.length() -1}" var="index">
+						<c:set var="data" value="${marketList.getJSONObject(index)}"></c:set>
+						<li>
+							<span class="no">${index+1 } </span>
+							<span class="isuKor">${data.getString("isuKorAbbr")}</span>
+						</li>
+			</c:forEach>
+			</ul>
+	</div>
+	<!-- //ì¢…ëª© ë¦¬ìŠ¤íŠ¸ -->
+</div>
 </body>
 </html>
