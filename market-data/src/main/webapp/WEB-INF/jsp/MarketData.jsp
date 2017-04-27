@@ -4,6 +4,51 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>first page</title>
+<style type="text/css">
+* { margin: 0px; padding: 0px; }
+li { list-style-type: none; }
+#topWrap {
+    padding: 10px;
+    font-size: 20pt;
+    background-color: #f39c11;
+    color: #fff;
+    text-align: center;
+}
+#searchForm li { margin: 10px; text-align: center; }
+#searchForm li span {
+    width: 20%;
+    display: inline-block;
+    padding: 10px;
+    background-color: #f39c11;
+    border-radius: 10px;
+    border: #847b7b;
+    text-align: center;
+}
+#searchForm li input,
+#searchForm li select {
+    width: 20%;
+    display: inline-block;
+    padding: 10px 5px;
+    text-align: center;
+    box-sizing: content-box;
+}
+#searchForm li input.edate {
+	margin-left: 10px;
+}
+#view { margin: 20px; }
+#stocksList li {
+    padding: 10px 0px;
+    text-align: center;
+    overflow: hidden;
+}
+#stocksList li.fRow { background-color: #eaeaea; }
+#stocksList li .no { float: left; width: 20%; }
+#stocksList li .isuKor { float: left; width: 50%; }
+#stocksList li .udp { float: left; width: 25%; }
+.plus { color: red; }
+.minus { color: blue; }
+</style>
+<title>1조</title>
 </head>
 <body>
 <div id="topWrap">
@@ -20,6 +65,8 @@
 				<span class="stockCode">종목코드</span>
 				<span class="money">시세</span>
 			</li>
+			</ul>
+			<ul>
 			<c:forEach begin="0" end="${marketList.length() -1}" var="index">
 						<c:set var="data" value="${marketList.getJSONObject(index)}"></c:set>
 						<li>
