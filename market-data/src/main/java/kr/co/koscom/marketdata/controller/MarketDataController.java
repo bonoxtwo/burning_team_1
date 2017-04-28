@@ -7,16 +7,10 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import org.json.*;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
-//import net.minidev.json.JSONArray;
 
 @RestController
 public class MarketDataController {
@@ -25,11 +19,14 @@ public class MarketDataController {
 		ModelMap model = new ModelMap();
 		JSONArray moneylist = new JSONArray();
 		JSONObject json = new JSONObject();
+		
+		/*  주식 시세 /{marketcode}/lists api 호출  */
 		String aaa = "https://sandbox-apigw.koscom.co.kr/v2/market/stocks/{marketcode}/lists".replace("{marketcode}", URLEncoder.encode("kospi", "UTF-8"));
 	    String js1 = GetApi(aaa);
 	    JSONObject jsonObject1 = new JSONObject(js1);
         model.addAttribute("marketList", jsonObject1.get("isuLists"));
 
+        /*  주식 시세 /{marketcode}/{issuecode}/price api 호출  */
         JSONObject jsonObject2=null;
         org.json.JSONArray arr = jsonObject1.getJSONArray("isuLists");
         for (int i = 0; i < 50; i++)
@@ -43,9 +40,12 @@ public class MarketDataController {
         json.put("priceList",moneylist);
         String st=json.toString();
         model.addAttribute("priceList", json.getJSONArray("priceList"));
+        
+        
         return new ModelAndView("MarketData", model);
 	}
 	
+	//API 호출 메소드
 	String GetApi(String link) throws IOException, Exception{
 		 StringBuilder urlBuilder = new StringBuilder(link);
 	        URL url = new URL(urlBuilder.toString());
