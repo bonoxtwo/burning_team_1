@@ -3,7 +3,7 @@
 <html lang="ko">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>first page</title>
+<title>반도체 기업 순위</title>
 <style type="text/css">
 * { margin: 0px; padding: 0px; }
 li { list-style-type: none; }
@@ -81,7 +81,7 @@ li { list-style-type: none; }
 				<span class="money">시세</span>
 			</li>
 		
-		<c:forEach begin="0" end="49" var="index">
+		<c:forEach begin="0" end="29" var="index">
 			<c:choose>
 			<c:when test = "${index mod 2 == 0}">
 						<c:set var="data" value="${marketList.getJSONObject(index)}"></c:set>

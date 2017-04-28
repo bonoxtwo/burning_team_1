@@ -21,20 +21,20 @@ public class MarketDataController {
 		JSONObject json = new JSONObject();
 		
 		/*  주식 시세 /{marketcode}/lists api 호출  */
-		String aaa = "https://sandbox-apigw.koscom.co.kr/v2/market/stocks/{marketcode}/lists".replace("{marketcode}", URLEncoder.encode("kospi", "UTF-8"));
-	    String js1 = GetApi(aaa);
-	    JSONObject jsonObject1 = new JSONObject(js1);
+		String listUrl = "https://sandbox-apigw.koscom.co.kr/v2/market/stocks/{marketcode}/lists".replace("{marketcode}", URLEncoder.encode("kospi", "UTF-8"));
+	    String jsList = GetApi(listUrl);
+	    JSONObject jsonObject1 = new JSONObject(jsList);
         model.addAttribute("marketList", jsonObject1.get("isuLists"));
 
         /*  주식 시세 /{marketcode}/{issuecode}/price api 호출  */
         JSONObject jsonObject2=null;
-        org.json.JSONArray arr = jsonObject1.getJSONArray("isuLists");
-        for (int i = 0; i < 50; i++)
+        org.json.JSONArray arrList = jsonObject1.getJSONArray("isuLists");
+        for (int i = 0; i < 30; i++)
         {
-            String issuecode = arr.getJSONObject(i).getString("isuSrtCd");
-            String bbb = "https://sandbox-apigw.koscom.co.kr/v2/market/stocks/{marketcode}/{issuecode}/price".replace("{marketcode}", URLEncoder.encode("kospi", "UTF-8")).replace("{issuecode}", URLEncoder.encode(issuecode, "UTF-8"));
-            String js2 = GetApi(bbb);
-            jsonObject2 = new JSONObject(js2);
+            String issuecode = arrList.getJSONObject(i).getString("isuSrtCd");
+            String priceList = "https://sandbox-apigw.koscom.co.kr/v2/market/stocks/{marketcode}/{issuecode}/price".replace("{marketcode}", URLEncoder.encode("kospi", "UTF-8")).replace("{issuecode}", URLEncoder.encode(issuecode, "UTF-8"));
+            String jsPrice = GetApi(priceList);
+            jsonObject2 = new JSONObject(jsPrice);
             moneylist.put(jsonObject2.getJSONObject("result"));
         }
         json.put("priceList",moneylist);
