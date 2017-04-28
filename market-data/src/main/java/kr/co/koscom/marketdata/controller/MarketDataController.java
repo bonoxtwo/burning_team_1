@@ -1,32 +1,48 @@
 package kr.co.koscom.marketdata.controller;
 
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
-import org.json.JSONObject;
+import org.json.*;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+//import net.minidev.json.JSONArray;
 
 @RestController
 public class MarketDataController {
 	@RequestMapping(value="/" , method = RequestMethod.GET)
 	public ModelAndView MarketData() throws IOException, Exception{
 		ModelMap model = new ModelMap();
-		
+		JSONArray moneylist = new JSONArray();
+		JSONObject json = new JSONObject();
 		String aaa = "https://sandbox-apigw.koscom.co.kr/v2/market/stocks/{marketcode}/lists".replace("{marketcode}", URLEncoder.encode("kospi", "UTF-8"));
 	    String js1 = GetApi(aaa);
 	    JSONObject jsonObject1 = new JSONObject(js1);
         model.addAttribute("marketList", jsonObject1.get("isuLists"));
-        
-/*		String bbb = "https://sandbox-apigw.koscom.co.kr/v2/market/stocks/{marketcode}/{issuecode}/price".replace("{marketcode}", URLEncoder.encode("kospi", "UTF-8")).replace("{issuecode}", URLEncoder.encode("005930", "UTF-8"));
-	    String js2 = GetApi(bbb);
-	    JSONObject jsonObject2 = new JSONObject(js2);
-        model.addAttribute("PriceList", jsonObject2.get("isuLists"));*/
+
+        JSONObject jsonObject2=null;
+        org.json.JSONArray arr = jsonObject1.getJSONArray("isuLists");
+        for (int i = 0; i < 50; i++)
+        {
+            String issuecode = arr.getJSONObject(i).getString("isuSrtCd");
+            String bbb = "https://sandbox-apigw.koscom.co.kr/v2/market/stocks/{marketcode}/{issuecode}/price".replace("{marketcode}", URLEncoder.encode("kospi", "UTF-8")).replace("{issuecode}", URLEncoder.encode(issuecode, "UTF-8"));
+            String js2 = GetApi(bbb);
+            jsonObject2 = new JSONObject(js2);
+            moneylist.put(jsonObject2.getJSONObject("result"));
+        }
+        json.put("priceList",moneylist);
+        String st=json.toString();
+        model.addAttribute("priceList", json.getJSONArray("priceList"));
         return new ModelAndView("MarketData", model);
 	}
 	
@@ -36,7 +52,7 @@ public class MarketDataController {
 	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 	        conn.setRequestMethod("GET");
 	        conn.setRequestProperty("apikey", "l7xx4095939d6b2647d08567d7b4218e9ba8");
-	        System.out.println("Response code: " + conn.getResponseCode());
+	       // System.out.println("Response code: " + conn.getResponseCode());
 	        BufferedReader rd;
 	        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
 	            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));

@@ -20,14 +20,15 @@
 				<span class="stockCode">종목코드</span>
 				<span class="money">시세</span>
 			</li>
-			<c:forEach begin="0" end="${marketList.length() -1}" var="index">
+			<c:forEach begin="0" end="49" var="index">
 						<c:set var="data" value="${marketList.getJSONObject(index)}"></c:set>
-						<li>
+						<c:set var="mdata" value="${priceList.getJSONObject(index)}"></c:set>
+							<li>
 							<span class="no">${index+1 } </span>
 							<span class="isuKor">${data.getString("isuKorAbbr")}</span>
 							<span class="stockCode">${data.getString("isuSrtCd")}</span>
-							<span class="money">1,000,000</span>
-						</li>
+							<span class="money">${mdata.getString("trdPrc")}</span>
+							</li>
 			</c:forEach>
 			</ul>
 	</div>
